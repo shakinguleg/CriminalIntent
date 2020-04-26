@@ -1,26 +1,27 @@
 package com.example.criminalintent;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.os.Bundle;
+import java.io.Serializable;
+import java.util.UUID;
 
-public class CrimeActivity extends AppCompatActivity {
+public class CrimeActivity extends SingleFragmentActivity {
+
+
+    private static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime);
+    protected Fragment createFragment() {
+        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        return CrimeFragment.newInstance(crimeId);
+    }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-
-        if (fragment==null){
-            fragment = new CrimeFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-        }
+    public static Intent newIntent(Context context, UUID uuid){
+        Intent intent = new Intent(context, CrimeActivity.class);
+        intent.putExtra(EXTRA_CRIME_ID, uuid);
+        return intent;
     }
 }

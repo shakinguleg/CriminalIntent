@@ -7,11 +7,21 @@ public class Crime {
     private UUID mUUID;
     private String mTitle;
     private Date mDate;
+    private int mRequiresPolice;
     private boolean mSolved;
+
 
     public Crime() {
         mUUID = UUID.randomUUID();
         mDate = new Date();
+    }
+
+    public int getRequiresPolice() {
+        return mRequiresPolice;
+    }
+
+    public void setRequiresPolice(int requiresPolice) {
+        mRequiresPolice = requiresPolice;
     }
 
 
